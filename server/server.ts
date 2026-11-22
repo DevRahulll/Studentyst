@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { connectToDB } from "./src/config/db.js";
 import authRouter from "./src/routes/auth.routes.js";
+import uploadRouter from "./src/routes/upload.routes.js";
 
 const port = process.env.PORT || 3000;
 
@@ -23,6 +24,7 @@ app.get("/", (req: Request, res: Response) => {
     res.send("Server is Live!");
 });
 app.use("/api/auth", authRouter);
+app.use("/api/upload", uploadRouter);
 
 //error handler
 app.use((error: any, _req: Request, res: Response, next: NextFunction) => {
