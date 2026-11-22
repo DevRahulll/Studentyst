@@ -5,12 +5,17 @@ import cookieParser from "cookie-parser";
 import { connectToDB } from "./src/config/db.js";
 import authRouter from "./src/routes/auth.routes.js";
 import uploadRouter from "./src/routes/upload.routes.js";
+import courseRouter from "./src/routes/course.routes.js";
+import progressRouter from "./src/routes/progress.routes.js";
 
 const port = process.env.PORT || 3000;
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:5173", "http://localhost:3000"];
+const allowedOrigins = process.env.CLIENT_URL?.split(",") || [
+    "http://localhost:5173",
+    "http://localhost:3000",
+];
 // Middleware
 app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json({ limit: "500mb" }));
@@ -25,6 +30,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 app.use("/api/auth", authRouter);
 app.use("/api/upload", uploadRouter);
+app.use("/api/courses", courseRouter);
+app.use("/api/progress", progressRouter);
 
 //error handler
 app.use((error: any, _req: Request, res: Response, next: NextFunction) => {
