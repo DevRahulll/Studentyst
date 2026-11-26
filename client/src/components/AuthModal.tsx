@@ -84,7 +84,7 @@ function AuthModal() {
             <div role="dialog" className="modal-card">
                 <button
                     onClick={close}
-                    className="btn-ghost absolute right-3 top-3 size-9 !p-0"
+                    className="btn-ghost absolute right-3 top-3 size-9 p-0!"
                 >
                     <XIcon className="size-5" />
                 </button>

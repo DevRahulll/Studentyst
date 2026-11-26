@@ -7,12 +7,13 @@ import authRouter from "./src/routes/auth.routes.js";
 import uploadRouter from "./src/routes/upload.routes.js";
 import courseRouter from "./src/routes/course.routes.js";
 import progressRouter from "./src/routes/progress.routes.js";
+import morgan from "morgan";
 
 const port = process.env.PORT || 3000;
 
 const app = express();
 
-const allowedOrigins = process.env.CLIENT_URL?.split(",") || [
+const allowedOrigins = process.env.CLIENT_URL || [
     "http://localhost:5173",
     "http://localhost:3000",
 ];
@@ -21,6 +22,7 @@ app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json({ limit: "500mb" }));
 app.use(express.urlencoded({ extended: true, limit: "500mb" }));
 app.use(cookieParser());
+app.use(morgan("dev"));
 
 //db
 connectToDB();

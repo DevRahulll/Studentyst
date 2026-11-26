@@ -92,6 +92,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 email,
                 password,
             });
+            console.log("api", api.getUri);
 
             if (res.data.success) {
                 setUser(res.data.user);
@@ -139,6 +140,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (!context)

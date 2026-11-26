@@ -295,7 +295,7 @@ function Home() {
                             className="md:border-l md:border-line md:px-8 md:first:border-l-0 md:first:pl-0"
                         >
                             <span
-                                className="font-display text-7xl font-extrabold leading-none text-primary [font-stretch:76%]"
+                                className="font-display text-7xl font-extrabold leading-none text-primary font-stretch-76%"
                                 aria-hidden="true"
                             >
                                 {i + 1}
