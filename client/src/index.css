@@ -1,1 +1,214 @@
 @import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/*  Theme: dark + orange. Surfaces are warm brown-black, never grey.   */
+/* ------------------------------------------------------------------ */
+@theme {
+    --font-sans:
+        "Instrument Sans Variable", ui-sans-serif, system-ui, sans-serif;
+    --font-display:
+        "Bricolage Grotesque Variable", "Instrument Sans Variable",
+        ui-sans-serif, system-ui, sans-serif;
+
+    /* surfaces, darkest to lightest */
+    --color-page: #130c07;
+    --color-surface: #1b110b;
+    --color-raised: #26180f;
+    --color-line: #3a2616;
+    --color-line-soft: #2a1b10;
+
+    /* text */
+    --color-ink: #f8ebdd;
+    --color-muted: #bda590;
+    --color-faint: #9a8270;
+
+    /* orange */
+    --color-primary: #ff7a1a;
+    --color-primary-hover: #ff9437;
+    --color-primary-deep: #c75306;
+    --color-on-primary: #1a0e05; /* text on orange: dark, for contrast */
+
+    /* supporting */
+    --color-accent: #ffc15e;
+    --color-good: #6fcf8e;
+    --color-bad: #f2607a;
+}
+
+@layer base {
+    html {
+        color-scheme: dark;
+        background: var(--color-page);
+        scrollbar-color: var(--color-line) var(--color-page);
+    }
+    body {
+        @apply bg-page font-sans text-ink antialiased;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+    h1,
+    h2,
+    h3,
+    h4 {
+        font-family: var(--font-display);
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+    }
+    ::selection {
+        background: var(--color-primary);
+        color: var(--color-on-primary);
+    }
+    :focus-visible {
+        outline: 2px solid var(--color-primary-hover);
+        outline-offset: 2px;
+    }
+    button,
+    [role="button"] {
+        cursor: pointer;
+    }
+    button:disabled {
+        cursor: not-allowed;
+    }
+}
+
+@layer components {
+    .container-page {
+        @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+    }
+
+    /* buttons: one shared base, then each variant */
+    .btn,
+    .btn-primary,
+    .btn-outline,
+    .btn-ghost,
+    .btn-danger {
+        @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-4 text-sm font-semibold transition-colors disabled:pointer-events-none disabled:opacity-50;
+    }
+    .btn-primary {
+        @apply bg-primary text-on-primary hover:bg-primary-hover active:bg-primary-deep;
+    }
+    .btn-outline {
+        @apply border border-line text-ink hover:border-primary/70 hover:bg-primary/10;
+    }
+    .btn-ghost {
+        @apply text-muted hover:bg-raised hover:text-ink;
+    }
+    .btn-danger {
+        @apply bg-bad/15 text-bad hover:bg-bad/25;
+    }
+    .btn-lg {
+        @apply h-12 rounded-xl px-6 text-base;
+    }
+    .btn-sm {
+        @apply h-8 px-3 text-xs;
+    }
+
+    /* form controls */
+    .field,
+    .input-icon {
+        @apply h-11 w-full rounded-lg border border-line bg-page/70 px-3.5 text-sm text-ink transition placeholder:text-faint hover:border-faint/60 focus:border-primary focus:ring-2 focus:ring-primary/25 focus-visible:outline-none;
+    }
+    .field[aria-invalid="true"],
+    .input-icon[aria-invalid="true"] {
+        @apply border-bad/70 focus:border-bad focus:ring-bad/25;
+    }
+    .input-icon {
+        @apply pl-10;
+    }
+    textarea.field {
+        @apply h-auto min-h-32 py-3 leading-relaxed;
+    }
+    select.field {
+        appearance: none;
+        padding-right: 2.5rem;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23bda590' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' viewBox='0 0 24 24'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.85rem center;
+    }
+    .label {
+        @apply mb-1.5 block text-sm font-medium text-ink;
+    }
+    .hint {
+        @apply mt-1.5 text-xs text-muted;
+    }
+    .error-text {
+        @apply mt-1.5 text-xs text-bad;
+    }
+
+    /* chips (filters, tags) */
+    .chip {
+        @apply inline-flex h-9 items-center gap-1.5 whitespace-nowrap rounded-full border border-line px-4 text-sm text-muted transition-colors hover:border-primary/60 hover:text-ink;
+    }
+    .chip-active {
+        @apply border-primary bg-primary/15 text-primary hover:text-primary;
+    }
+
+    /* surfaces */
+    .panel {
+        @apply rounded-xl border border-line bg-surface;
+    }
+
+    /* modal */
+    .modal-backdrop {
+        @apply fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-black/70 p-4 backdrop-blur-sm;
+        animation: fade-in 0.15s ease-out;
+    }
+    .modal-card {
+        @apply relative my-auto w-full max-w-md rounded-2xl border border-line bg-surface p-7;
+        animation: pop-in 0.18s ease-out;
+    }
+
+    .skeleton {
+        @apply animate-pulse rounded-md bg-raised;
+    }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Motion: only the lecture bar on the home hero animates on load.    */
+/* ------------------------------------------------------------------ */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+}
+@keyframes pop-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+    }
+}
+@keyframes seg-light {
+    from {
+        opacity: 0.2;
+        transform: scaleY(0.4);
+    }
+}
+.seg-animate {
+    transform-origin: bottom;
+    animation: seg-light 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+@keyframes hero-in {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+}
+.hero-in {
+    animation: hero-in 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* custom scrollbars for scroll panes (lecture list, modals) */
+.scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-line) transparent;
+}
