@@ -64,3 +64,9 @@ export const EmptyState = ({
         )}
     </div>
 );
+
+export const FullPageSpinner = () => (
+    <div className="grid min-h-[60vh] place-items-center text-primary">
+        <Spinner className="size-8" />
+    </div>
+);
